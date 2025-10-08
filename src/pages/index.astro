@@ -9,9 +9,7 @@ const permalink = Astro.site.href;
 <BaseLayout title={title} description={description} permalink={permalink}>
   <div class="home-container">
     <div class="home-copy">
-      <!-- 移除欢迎标题 -->
-      
-      <!-- 董璇推荐语移到上面 -->
+      <!-- 董璇推荐语 -->
       <div class="endorsement">
         <p class="endorsement-text">"作为演员，时刻保持最佳状态是我的工作。Dopi，我信赖的护肤专家。"</p>
         <p class="endorsement-author">—董璇</p>
@@ -58,8 +56,8 @@ const permalink = Astro.site.href;
     display: flex;
     flex: 1;
     justify-content: center;
-    margin: 1em 0; /* 减少上下边距 */
-    min-height: 300px; /* 减少最小高度 */
+    margin: 0.5em 0; /* 进一步减少上下边距 */
+    min-height: 200px; /* 大幅减少最小高度 */
   }
 
   .home-copy {
@@ -67,36 +65,36 @@ const permalink = Astro.site.href;
     padding: 0 1em;
   }
 
-  /* 董璇推荐语样式 */
+  /* 董璇推荐语样式 - 缩小间距 */
   .endorsement {
-    margin-bottom: 2em;
-    padding: 1.5em;
+    margin-bottom: 1em; /* 从 2em 减少到 1em */
+    padding: 1em; /* 从 1.5em 减少到 1em */
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     border-radius: 12px;
     border-left: 4px solid #667eea;
   }
 
   .endorsement-text {
-    font-size: 1.3em;
+    font-size: 1.2em; /* 稍微减小字号 */
     font-style: italic;
     color: #2c3e50;
-    line-height: 1.5;
-    margin-bottom: 0.5em;
+    line-height: 1.4; /* 减少行高 */
+    margin-bottom: 0.3em; /* 减少下边距 */
     text-align: center;
   }
 
   .endorsement-author {
-    font-size: 1.1em;
+    font-size: 1em; /* 稍微减小字号 */
     color: #667eea;
     font-weight: 600;
     text-align: right;
     margin: 0;
   }
 
-  /* 产品宣传样式 */
+  /* 产品宣传样式 - 缩小间距 */
   .product-promo {
-    margin: 2em 0;
-    padding: 1.5em;
+    margin: 1em 0; /* 从 2em 减少到 1em */
+    padding: 1em; /* 从 1.5em 减少到 1em */
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-radius: 12px;
     color: white;
@@ -104,27 +102,27 @@ const permalink = Astro.site.href;
   }
 
   .product-title {
-    font-size: 1.8em;
+    font-size: 1.6em; /* 稍微减小字号 */
     font-weight: 700;
-    margin-bottom: 0.5em;
+    margin-bottom: 0.3em; /* 减少下边距 */
     color: white;
   }
 
   .product-features {
-    font-size: 1.3em;
+    font-size: 1.1em; /* 稍微减小字号 */
     font-weight: 600;
     margin: 0;
     opacity: 0.9;
   }
 
-  /* 特效联系链接 */
+  /* 特效联系链接 - 缩小间距 */
   .contact-link {
-    margin: 2em 0;
+    margin: 1em 0; /* 从 2em 减少到 1em */
     text-align: center;
   }
 
   .contact-link p {
-    font-size: 1.4em;
+    font-size: 1.2em; /* 稍微减小字号 */
     margin: 0;
   }
 
@@ -132,8 +130,8 @@ const permalink = Astro.site.href;
     color: #667eea;
     font-weight: 700;
     text-decoration: none;
-    padding: 8px 16px;
-    border-radius: 25px;
+    padding: 6px 14px; /* 减小内边距 */
+    border-radius: 20px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
@@ -179,20 +177,20 @@ const permalink = Astro.site.href;
 
   /* 底部文字样式 */
   .video-caption {
-    margin-top: 1em; /* 减少上边距 */
+    margin-top: 0.5em; /* 进一步减少上边距 */
   }
 
   .caption-main {
-    font-size: 1.8em;
+    font-size: 1.6em; /* 稍微减小字号 */
     font-weight: 700;
     color: #2c3e50;
-    margin-bottom: 0.5em;
+    margin: 0; /* 移除所有边距 */
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
   @media (max-width: 1200px) {
     .home-container {
-      margin: 0.5em 0;
+      margin: 0.3em 0;
     }
 
     .hero-video {
@@ -200,72 +198,81 @@ const permalink = Astro.site.href;
     }
     
     .product-title {
-      font-size: 1.6em;
+      font-size: 1.4em;
     }
     
     .caption-main {
-      font-size: 1.6em;
+      font-size: 1.4em;
     }
     
     .endorsement-text {
-      font-size: 1.2em;
+      font-size: 1.1em;
     }
   }
 
   @media (max-width: 800px) {
     .home-container {
       flex-direction: column;
-      margin: 0.5em 0;
+      margin: 0.3em 0;
     }
 
     .home-copy {
       flex: 0;
-      padding-bottom: 1em;
+      padding-bottom: 0.5em; /* 减少底部内边距 */
       text-align: center;
     }
     
     .product-promo {
-      margin: 1.5em 0;
-      padding: 1em;
+      margin: 0.8em 0; /* 移动端进一步缩小间距 */
+      padding: 0.8em;
     }
     
     .product-title {
-      font-size: 1.4em;
+      font-size: 1.3em;
     }
     
     .caption-main {
-      font-size: 1.4em;
+      font-size: 1.3em;
     }
     
     .endorsement {
-      margin-bottom: 1.5em;
-      padding: 1em;
-    }
-    
-    .endorsement-text {
-      font-size: 1.1em;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .product-title {
-      font-size: 1.2em;
-    }
-    
-    .product-features {
-      font-size: 1.1em;
-    }
-    
-    .caption-main {
-      font-size: 1.2em;
+      margin-bottom: 0.8em; /* 移动端进一步缩小间距 */
+      padding: 0.8em;
     }
     
     .endorsement-text {
       font-size: 1em;
     }
     
+    .contact-link {
+      margin: 0.8em 0; /* 移动端进一步缩小间距 */
+    }
+  }
+
+  @media (max-width: 480px) {
+    .product-title {
+      font-size: 1.1em;
+    }
+    
+    .product-features {
+      font-size: 1em;
+    }
+    
+    .caption-main {
+      font-size: 1.1em;
+    }
+    
+    .endorsement-text {
+      font-size: 0.9em;
+    }
+    
     .contact-link p {
-      font-size: 1.2em;
+      font-size: 1em;
+    }
+    
+    .glowing-link {
+      padding: 4px 12px;
+      font-size: 0.9em;
     }
   }
 </style>
