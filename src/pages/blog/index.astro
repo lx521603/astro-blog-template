@@ -42,7 +42,19 @@ const allPosts = Object.entries(postModules).map(([filePath, module]) => {
     body
   };
 }).filter(post => post.data.title) // 确保有标题的文章
-  .sort((a, b) => new Date(b.data.publishDate).valueOf() - new Date(a.data.publishDate).valueOf());
+  // 修改排序逻辑：先按置顶排序，再按日期排序
+  .sort((a, b) => {
+    // 检查是否为置顶文章
+    const aPinned = a.data.pinned === 'true' || a.data.pinned === true;
+    const bPinned = b.data.pinned === 'true' || b.data.pinned === true;
+    
+    // 置顶文章排在前面
+    if (aPinned && !bPinned) return -1;
+    if (!aPinned && bPinned) return 1;
+    
+    // 都是置顶或都不是置顶，按日期排序
+    return new Date(b.data.publishDate).valueOf() - new Date(a.data.publishDate).valueOf();
+  });
 
 // 改进的图片提取函数
 function getFirstImageFromBody(body) {
@@ -69,11 +81,12 @@ function getFirstImageFromBody(body) {
       // 修复链接：添加斜杠
       const href = `/blog/${post.slug}/`;
       const firstImage = getFirstImageFromBody(post.body);
+      const isPinned = post.data.pinned === 'true' || post.data.pinned === true;
       
       return (
         <div>
           { index !== 0 && <hr /> }
-          <div class="post-item">
+          <div class={`post-item ${isPinned ? 'pinned-post' : ''}`}>
             {/* 自动显示正文中的第一张图片 */}
             {firstImage && (
               <div class="post-image auto">
@@ -90,6 +103,7 @@ function getFirstImageFromBody(body) {
             <div class="post-content">
               <h2>
                 <a href={href}>{post.data.title}</a>
+                {isPinned && <span class="pinned-badge">置顶 🔝</span>}
               </h2>
               <p>{post.data.description}</p>
               <div class="post-item-footer">
@@ -127,6 +141,7 @@ function getFirstImageFromBody(body) {
     gap: 2rem;
     align-items: flex-start;
     margin: 2rem 0;
+    position: relative;
   }
 
   .post-image {
@@ -152,6 +167,26 @@ function getFirstImageFromBody(body) {
     flex: 1;
   }
 
+  /* 置顶文章样式 */
+  .pinned-post {
+    border-left: 4px solid #667eea;
+    background: linear-gradient(135deg, #f8f9fa 0%, #f1f3f4 100%);
+    padding-left: 1rem;
+    margin-left: -1rem;
+  }
+
+  .pinned-badge {
+    background: #667eea;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 16px;
+    font-size: 0.8rem;
+    margin-left: 12px;
+    font-weight: 600;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
   /* 移动端适配 */
   @media (max-width: 768px) {
     .post-item {
@@ -167,6 +202,17 @@ function getFirstImageFromBody(body) {
     
     .post-image.auto img {
       max-height: 300px;
+    }
+
+    .pinned-post {
+      padding-left: 0.5rem;
+      margin-left: -0.5rem;
+    }
+
+    .pinned-badge {
+      font-size: 0.7rem;
+      padding: 3px 8px;
+      margin-left: 8px;
     }
   }
 </style>
