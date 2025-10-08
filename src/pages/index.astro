@@ -9,33 +9,44 @@ const permalink = Astro.site.href;
 <BaseLayout title={title} description={description} permalink={permalink}>
   <div class="home-container">
     <div class="home-copy">
-      <h1>欢迎来到薇薇的小站</h1>
-      <p>请点击 <a href="https://sorayt.com" target="_blank" rel="noopener">薇薇</a> 查看联系方式</p>
+      <!-- 移除欢迎标题 -->
       
-      <!-- 新增产品宣传文字 -->
+      <!-- 董璇推荐语移到上面 -->
+      <div class="endorsement">
+        <p class="endorsement-text">"作为演员，时刻保持最佳状态是我的工作。Dopi，我信赖的护肤专家。"</p>
+        <p class="endorsement-author">—董璇</p>
+      </div>
+
+      <!-- 产品宣传文字 -->
       <div class="product-promo">
         <h2 class="product-title">Dopi 不脱妆粉底液</h2>
         <p class="product-features">防水 · 防汗 · 防蹭 · 美白</p>
       </div>
+
+      <!-- 特效联系链接 -->
+      <div class="contact-link">
+        <p>请点击 <a href="https://sorayt.com" target="_blank" rel="noopener" class="glowing-link">薇薇</a> 查看联系方式</p>
+      </div>
     </div>
 
     <div class="hero-video-container">
-      <!-- 将图片替换为视频 -->
+      <!-- 自动播放的视频，无封面 -->
       <video 
-        controls 
+        autoplay
+        muted
+        loop
+        playsinline
+        controls
         width="100%"
-        poster="/assets/vv.jpg"  <!-- 视频封面使用原来的图片 -->
         class="hero-video"
       >
         <source src="/assets/video.mp4" type="video/mp4">
         您的浏览器不支持视频播放
       </video>
       
-      <!-- 修改底部文字 -->
+      <!-- 底部文字 -->
       <div class="video-caption">
         <p class="caption-main">你身边的美妆专家</p>
-        <p class="caption-sub">作为演员，时刻保持最佳状态是我的工作。Dopi，我信赖的护肤专家。</p>
-        <p class="caption-author">—董璇</p>
       </div>
     </div>
   </div>
@@ -47,8 +58,8 @@ const permalink = Astro.site.href;
     display: flex;
     flex: 1;
     justify-content: center;
-    margin: 2em 0;
-    min-height: 400px;
+    margin: 1em 0; /* 减少上下边距 */
+    min-height: 300px; /* 减少最小高度 */
   }
 
   .home-copy {
@@ -56,17 +67,33 @@ const permalink = Astro.site.href;
     padding: 0 1em;
   }
 
-  .home-copy h1 {
-    font-weight: 700;
+  /* 董璇推荐语样式 */
+  .endorsement {
+    margin-bottom: 2em;
+    padding: 1.5em;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 12px;
+    border-left: 4px solid #667eea;
+  }
+
+  .endorsement-text {
+    font-size: 1.3em;
+    font-style: italic;
+    color: #2c3e50;
+    line-height: 1.5;
     margin-bottom: 0.5em;
-    line-height: 1.3;
+    text-align: center;
   }
 
-  .home-copy p {
-    font-size: 1.4em;
+  .endorsement-author {
+    font-size: 1.1em;
+    color: #667eea;
+    font-weight: 600;
+    text-align: right;
+    margin: 0;
   }
 
-  /* 新增产品宣传样式 */
+  /* 产品宣传样式 */
   .product-promo {
     margin: 2em 0;
     padding: 1.5em;
@@ -90,6 +117,51 @@ const permalink = Astro.site.href;
     opacity: 0.9;
   }
 
+  /* 特效联系链接 */
+  .contact-link {
+    margin: 2em 0;
+    text-align: center;
+  }
+
+  .contact-link p {
+    font-size: 1.4em;
+    margin: 0;
+  }
+
+  .glowing-link {
+    color: #667eea;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glowing-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+  }
+
+  .glowing-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
+  }
+
+  .glowing-link:hover::before {
+    left: 100%;
+  }
+
   /* 视频容器样式 */
   .hero-video-container {
     margin: 0 1em;
@@ -102,41 +174,25 @@ const permalink = Astro.site.href;
     max-width: 600px;
     border-radius: 12px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    background: #000;
+    background: #f8f9fa;
   }
 
   /* 底部文字样式 */
   .video-caption {
-    margin-top: 1.5em;
-    text-align: center;
+    margin-top: 1em; /* 减少上边距 */
   }
 
   .caption-main {
-    font-size: 1.8em;  /* 加大字号 */
+    font-size: 1.8em;
     font-weight: 700;
     color: #2c3e50;
     margin-bottom: 0.5em;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
-  .caption-sub {
-    font-size: 1.1em;
-    color: #5a6c7d;
-    line-height: 1.5;
-    margin-bottom: 0.5em;
-    font-style: italic;
-  }
-
-  .caption-author {
-    font-size: 1em;
-    color: #667eea;
-    font-weight: 600;
-    margin: 0;
-  }
-
   @media (max-width: 1200px) {
-    p {
-      font-size: 1.2em;
+    .home-container {
+      margin: 0.5em 0;
     }
 
     .hero-video {
@@ -150,16 +206,21 @@ const permalink = Astro.site.href;
     .caption-main {
       font-size: 1.6em;
     }
+    
+    .endorsement-text {
+      font-size: 1.2em;
+    }
   }
 
   @media (max-width: 800px) {
     .home-container {
       flex-direction: column;
+      margin: 0.5em 0;
     }
 
     .home-copy {
       flex: 0;
-      padding-bottom: 2em;
+      padding-bottom: 1em;
       text-align: center;
     }
     
@@ -174,6 +235,15 @@ const permalink = Astro.site.href;
     
     .caption-main {
       font-size: 1.4em;
+    }
+    
+    .endorsement {
+      margin-bottom: 1.5em;
+      padding: 1em;
+    }
+    
+    .endorsement-text {
+      font-size: 1.1em;
     }
   }
 
@@ -190,8 +260,12 @@ const permalink = Astro.site.href;
       font-size: 1.2em;
     }
     
-    .caption-sub {
+    .endorsement-text {
       font-size: 1em;
+    }
+    
+    .contact-link p {
+      font-size: 1.2em;
     }
   }
 </style>
