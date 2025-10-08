@@ -66,7 +66,8 @@ function getFirstImageFromBody(body) {
   <div class="container">
     <h1>日常</h1>
     {allPosts.map((post, index) => {
-      const href = `/blog/${post.slug}`;
+      // 修复链接：添加斜杠
+      const href = `/blog/${post.slug}/`;
       const firstImage = getFirstImageFromBody(post.body);
       
       return (
@@ -75,13 +76,13 @@ function getFirstImageFromBody(body) {
           <div class="post-item">
             {/* 自动显示正文中的第一张图片 */}
             {firstImage && (
-              <div class="post-image">
+              <div class="post-image auto">
                 <a href={href}>
                   <img 
                     src={firstImage} 
                     alt={post.data.title}
                     loading="lazy"
-                    onerror="this.style.display='none'"  // 图片加载失败时隐藏
+                    onerror="this.style.display='none'"
                   />
                 </a>
               </div>
@@ -130,13 +131,15 @@ function getFirstImageFromBody(body) {
 
   .post-image {
     flex-shrink: 0;
-    width: 200px;
+    width: 150px;
   }
 
-  .post-image img {
+  .post-image.auto img {
     width: 100%;
-    height: 120px;
-    object-fit: cover;
+    height: auto;
+    max-height: 250px;
+    object-fit: contain;
+    background: #f8f9fa;
     border-radius: 8px;
     transition: transform 0.3s ease;
   }
@@ -158,10 +161,12 @@ function getFirstImageFromBody(body) {
 
     .post-image {
       width: 100%;
+      max-width: 200px;
+      margin: 0 auto;
     }
-
-    .post-image img {
-      height: 160px;
+    
+    .post-image.auto img {
+      max-height: 300px;
     }
   }
 </style>
