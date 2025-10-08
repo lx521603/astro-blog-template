@@ -9,18 +9,34 @@ const permalink = Astro.site.href;
 <BaseLayout title={title} description={description} permalink={permalink}>
   <div class="home-container">
     <div class="home-copy">
-      <h1欢迎来到薇薇的小站</h1>
-      <p>请点击 <a href="https://sorayt.com" target="_blank" rel="noopener">薇薇</a>  查看联系方式</p>
+      <h1>欢迎来到薇薇的小站</h1>
+      <p>请点击 <a href="https://sorayt.com" target="_blank" rel="noopener">薇薇</a> 查看联系方式</p>
+      
+      <!-- 新增产品宣传文字 -->
+      <div class="product-promo">
+        <h2 class="product-title">Dopi 不脱妆粉底液</h2>
+        <p class="product-features">防水 · 防汗 · 防蹭 · 美白</p>
+      </div>
     </div>
 
-    <div class="hero-image-container">
-      <picture>
-        <source srcset="/assets/home-illustration.webp" media="(min-width: 600px)">
-        <img class="hero-image" alt="Illustration of person reading a book" src="/assets/vv.jpg" width="550" height="466">
-      </picture>
-      <p class="caption">
-        工作中的薇薇
-      </p>
+    <div class="hero-video-container">
+      <!-- 将图片替换为视频 -->
+      <video 
+        controls 
+        width="100%"
+        poster="/assets/vv.jpg"  <!-- 视频封面使用原来的图片 -->
+        class="hero-video"
+      >
+        <source src="/assets/video.mp4" type="video/mp4">
+        您的浏览器不支持视频播放
+      </video>
+      
+      <!-- 修改底部文字 -->
+      <div class="video-caption">
+        <p class="caption-main">你身边的美妆专家</p>
+        <p class="caption-sub">作为演员，时刻保持最佳状态是我的工作。Dopi，我信赖的护肤专家。</p>
+        <p class="caption-author">—董璇</p>
+      </div>
     </div>
   </div>
 </BaseLayout>
@@ -50,26 +66,72 @@ const permalink = Astro.site.href;
     font-size: 1.4em;
   }
 
-  .hero-image-container {
-    margin: 0 1em;
+  /* 新增产品宣传样式 */
+  .product-promo {
+    margin: 2em 0;
+    padding: 1.5em;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    color: white;
     text-align: center;
   }
 
-  .hero-image-container picture {
-    display: block;
-    min-height: 250px;
+  .product-title {
+    font-size: 1.8em;
+    font-weight: 700;
+    margin-bottom: 0.5em;
+    color: white;
   }
 
-  .caption {
-    font-size: .8em;
-    font-style: italic;
-    text-align: left;
+  .product-features {
+    font-size: 1.3em;
+    font-weight: 600;
+    margin: 0;
+    opacity: 0.9;
   }
 
-  .hero-image {
+  /* 视频容器样式 */
+  .hero-video-container {
+    margin: 0 1em;
+    text-align: center;
+    flex: 1;
+  }
+
+  .hero-video {
     width: 100%;
-    max-width: 550px;
-    margin-bottom: 1em;
+    max-width: 600px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    background: #000;
+  }
+
+  /* 底部文字样式 */
+  .video-caption {
+    margin-top: 1.5em;
+    text-align: center;
+  }
+
+  .caption-main {
+    font-size: 1.8em;  /* 加大字号 */
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 0.5em;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .caption-sub {
+    font-size: 1.1em;
+    color: #5a6c7d;
+    line-height: 1.5;
+    margin-bottom: 0.5em;
+    font-style: italic;
+  }
+
+  .caption-author {
+    font-size: 1em;
+    color: #667eea;
+    font-weight: 600;
+    margin: 0;
   }
 
   @media (max-width: 1200px) {
@@ -77,8 +139,16 @@ const permalink = Astro.site.href;
       font-size: 1.2em;
     }
 
-    .hero-image {
-      max-width: 400px;
+    .hero-video {
+      max-width: 500px;
+    }
+    
+    .product-title {
+      font-size: 1.6em;
+    }
+    
+    .caption-main {
+      font-size: 1.6em;
     }
   }
 
@@ -91,6 +161,37 @@ const permalink = Astro.site.href;
       flex: 0;
       padding-bottom: 2em;
       text-align: center;
+    }
+    
+    .product-promo {
+      margin: 1.5em 0;
+      padding: 1em;
+    }
+    
+    .product-title {
+      font-size: 1.4em;
+    }
+    
+    .caption-main {
+      font-size: 1.4em;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .product-title {
+      font-size: 1.2em;
+    }
+    
+    .product-features {
+      font-size: 1.1em;
+    }
+    
+    .caption-main {
+      font-size: 1.2em;
+    }
+    
+    .caption-sub {
+      font-size: 1em;
     }
   }
 </style>
