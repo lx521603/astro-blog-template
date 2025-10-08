@@ -1,19 +1,64 @@
 ---
-import { getCollection } from 'astro:content'
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const title = '日常';
 const description = 'Latest articles.';
 const permalink = `${Astro.site.href}blog`;
 
-let allPosts = await getCollection('posts')
-allPosts = allPosts.sort((a, b) => new Date(b.data.publishDate).valueOf() - new Date(a.data.publishDate).valueOf());
+// 直接使用 import.meta.glob 获取文章原始内容
+const postModules = import.meta.glob('../../data/blog-posts/*.md', { 
+  eager: true,
+  query: '?raw'
+});
 
-// 函数：从文章内容中提取第一张图片
+// 处理文章数据
+const allPosts = Object.entries(postModules).map(([filePath, module]) => {
+  const rawContent = module.default;
+  const fileName = filePath.split('/').pop();
+  const slug = fileName.replace('.md', '');
+  
+  // 解析 frontmatter
+  const frontmatterMatch = rawContent.match(/---\s*\n([\s\S]*?)\n\s*---/);
+  let frontmatter = {};
+  
+  if (frontmatterMatch) {
+    const frontmatterText = frontmatterMatch[1];
+    frontmatterText.split('\n').forEach(line => {
+      const colonIndex = line.indexOf(':');
+      if (colonIndex > -1) {
+        const key = line.slice(0, colonIndex).trim();
+        const value = line.slice(colonIndex + 1).trim().replace(/^['"](.*)['"]$/, '$1');
+        frontmatter[key] = value;
+      }
+    });
+  }
+  
+  // 获取正文内容（去掉 frontmatter 部分）
+  const body = frontmatterMatch ? rawContent.slice(frontmatterMatch[0].length) : rawContent;
+  
+  return {
+    slug,
+    data: frontmatter,
+    body
+  };
+}).filter(post => post.data.title) // 确保有标题的文章
+  .sort((a, b) => new Date(b.data.publishDate).valueOf() - new Date(a.data.publishDate).valueOf());
+
+// 改进的图片提取函数
 function getFirstImageFromBody(body) {
-  const imgRegex = /<img[^>]+src="([^">]+)"[^>]*>/i;
-  const match = body.match(imgRegex);
-  return match ? match[1] : null;
+  if (!body) return null;
+  
+  // 先匹配 Markdown 图片语法 ![alt](src)
+  const mdRegex = /!\[.*?\]\((.*?)\)/i;
+  const mdMatch = body.match(mdRegex);
+  if (mdMatch) return mdMatch[1];
+  
+  // 再匹配 HTML img 标签
+  const htmlRegex = /<img[^>]+src="([^">]+)"[^>]*>/i;
+  const htmlMatch = body.match(htmlRegex);
+  if (htmlMatch) return htmlMatch[1];
+  
+  return null;
 }
 ---
 
@@ -21,7 +66,7 @@ function getFirstImageFromBody(body) {
   <div class="container">
     <h1>日常</h1>
     {allPosts.map((post, index) => {
-      const href = `/blog/${post.data.slug}`;
+      const href = `/blog/${post.slug}`;
       const firstImage = getFirstImageFromBody(post.body);
       
       return (
@@ -36,6 +81,7 @@ function getFirstImageFromBody(body) {
                     src={firstImage} 
                     alt={post.data.title}
                     loading="lazy"
+                    onerror="this.style.display='none'"  // 图片加载失败时隐藏
                   />
                 </a>
               </div>
