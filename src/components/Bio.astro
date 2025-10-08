@@ -1,10 +1,10 @@
 <div>
-  <img src="/assets/profile-pic.webp" alt="Headshot of Maxi Ferreira">
+  <img src="/assets/1.jpg" alt="薇薇的头像">
   <p>
-    Hi, 我是 <strong>薇薇</strong>. 我是一个主播。
-    You can follow me on <a href="https://www.twitter.com/Charca" target="_blank">Twitter</a>,
-    see some of my work on <a href="https://www.github.com/Charca" target="_blank">GitHub</a>,
-    or read more about me on <a href="https://www.maxiferreira.com" target="_blank">my website</a>.
+    大家好，我是 <strong>薇薇</strong>。我是一个自由主播，专注美妆创业。
+    欢迎在抖音搜索 <strong>VMimi33453</strong> 关注我，
+    或者添加我的微信号 <strong>zmmz9108</strong> 交流合作，
+    也可以访问我的 <a href="https://oni.yt" target="_blank" rel="noopener">个人网站</a> 了解更多。
   </p>
 </div>
 
@@ -12,6 +12,8 @@
   div {
     align-items: center;
     display: flex;
+    max-width: 600px;
+    margin: 0 auto;
   }
 
   img {
@@ -20,9 +22,50 @@
     border-radius: 100px;
     display: block;
     margin-right: 20px;
+    object-fit: cover;
+    border: 3px solid #f8f9fa;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 
   p {
     font-size: 1.125rem;
+    line-height: 1.6;
+    color: #333;
+    margin: 0;
+  }
+
+  strong {
+    color: #667eea;
+    font-weight: 600;
+  }
+
+  a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  a:hover {
+    color: #764ba2;
+    text-decoration: underline;
+  }
+
+  /* 移动端适配 */
+  @media (max-width: 768px) {
+    div {
+      flex-direction: column;
+      text-align: center;
+      padding: 0 1rem;
+    }
+
+    img {
+      margin-right: 0;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
   }
 </style>
